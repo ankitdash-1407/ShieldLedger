@@ -2,6 +2,7 @@ export type AnalyzeCollectRequest = {
   note: string;
   txn_type: string;
   scammer_id: string;
+  tx_id?: string;
 };
 
 export type AnalyzeCollectResponse = {
@@ -14,6 +15,9 @@ export type VerifyQrRequest = {
   merchant_id: string;
   amount: number;
   location: string;
+  lat?: number;
+  lng?: number;
+  is_screen_shared?: boolean;
 };
 
 export type VerifyQrResponse = {

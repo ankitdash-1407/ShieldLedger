@@ -1,6 +1,7 @@
 import { Pool } from "pg";
 
 let pool: Pool | undefined;
+console.log("DEBUG: Connecting to DB URL:", process.env.DATABASE_URL);
 
 export function getPool(): Pool {
   if (!pool) {

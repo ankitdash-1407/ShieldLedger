@@ -5,10 +5,10 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -33,37 +33,48 @@
   --color-warn: var(--warn);
   --color-danger: var(--danger);
   --color-grid-line: var(--grid-line);
-  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", sans-serif;
+  --font-mono: "SF Mono", "JetBrains Mono", Menlo, monospace;
 }
 
 :root {
-  --radius: 0.5rem;
-  /* Dark hacker theme as default */
-  --background: oklch(0.15 0.02 250);
-  --foreground: oklch(0.92 0.05 160);
-  --card: oklch(0.19 0.025 250);
-  --card-foreground: oklch(0.92 0.05 160);
-  --popover: oklch(0.19 0.025 250);
-  --popover-foreground: oklch(0.92 0.05 160);
-  --primary: oklch(0.85 0.22 150);
-  --primary-foreground: oklch(0.12 0.02 250);
-  --secondary: oklch(0.25 0.03 250);
-  --secondary-foreground: oklch(0.92 0.05 160);
-  --muted: oklch(0.22 0.025 250);
-  --muted-foreground: oklch(0.65 0.03 200);
-  --accent: oklch(0.7 0.2 200);
-  --accent-foreground: oklch(0.12 0.02 250);
-  --destructive: oklch(0.65 0.28 25);
-  --destructive-foreground: oklch(0.98 0.01 0);
-  --border: oklch(0.3 0.04 200 / 40%);
-  --input: oklch(0.25 0.03 250);
-  --ring: oklch(0.7 0.2 160);
+  /* Apple OLED Pure Black */
+  --background: #000000;
+  --foreground: #ffffff;
 
-  --neon: oklch(0.88 0.25 145);
-  --neon-dim: oklch(0.55 0.15 145);
-  --warn: oklch(0.82 0.18 85);
-  --danger: oklch(0.65 0.28 25);
-  --grid-line: oklch(0.3 0.05 200 / 25%);
+  /* Frosted Glass Base */
+  --card: rgba(28, 28, 30, 0.5);
+  --card-foreground: #ffffff;
+  --popover: rgba(28, 28, 30, 0.6);
+  --popover-foreground: #ffffff;
+
+  /* High Contrast White */
+  --primary: #ffffff;
+  --primary-foreground: #000000;
+  --secondary: rgba(255, 255, 255, 0.1);
+  --secondary-foreground: #ebebf5;
+
+  /* Subtle Grays */
+  --muted: #1c1c1e;
+  --muted-foreground: #8e8e93;
+  --accent: #2c2c2e;
+  --accent-foreground: #ffffff;
+
+  /* Apple System Red */
+  --destructive: #ff3b30;
+  --destructive-foreground: #ffffff;
+
+  /* Clean Borders */
+  --border: rgba(255, 255, 255, 0.15);
+  --input: rgba(255, 255, 255, 0.1);
+  --ring: rgba(255, 255, 255, 0.3);
+
+  /* Overriding Neon to Pure White for existing classes */
+  --neon: #ffffff;
+  --neon-dim: rgba(255, 255, 255, 0.4);
+  --warn: #ffcc00;
+  --danger: #ff3b30;
+  --grid-line: transparent;
 }
 
 @layer base {
@@ -73,55 +84,56 @@
   html, body {
     background-color: var(--color-background);
     color: var(--color-foreground);
-    font-family: var(--font-mono);
+    font-family: var(--font-sans); /* Swapped default to clean Apple Sans */
     -webkit-font-smoothing: antialiased;
   }
 }
 
-@utility scanlines {
-  background-image: repeating-linear-gradient(
-    0deg,
-    transparent 0px,
-    transparent 2px,
-    oklch(0.9 0.1 160 / 0.03) 2px,
-    oklch(0.9 0.1 160 / 0.03) 3px
-  );
-}
-
+/* Stripped hacker grid, replaced with premium subtle gradient spot */
 @utility grid-bg {
-  background-image:
-    linear-gradient(var(--grid-line) 1px, transparent 1px),
-    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
-  background-size: 32px 32px;
+  background-image: radial-gradient(circle at 50% -20%, rgba(255,255,255,0.05), transparent 60%);
 }
 
+/* Stripped scanlines, replaced with clean overlay */
+@utility scanlines {
+  background: linear-gradient(to bottom, transparent, rgba(0,0,0,0.2));
+}
+
+/* Tight, premium white text glow */
 @utility text-glow {
-  text-shadow: 0 0 8px currentColor, 0 0 16px currentColor;
+  text-shadow: 0 0 12px rgba(255, 255, 255, 0.4);
 }
 
+/* Glassmorphism Inner Shadow */
 @utility box-glow {
-  box-shadow: 0 0 12px oklch(0.7 0.22 145 / 0.5), inset 0 0 12px oklch(0.7 0.22 145 / 0.1);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
 }
 
+/* Urgent iOS Alarm Red Glow */
 @utility box-glow-red {
-  box-shadow: 0 0 24px oklch(0.65 0.28 25 / 0.8), inset 0 0 24px oklch(0.65 0.28 25 / 0.3);
+  box-shadow: 0 0 40px rgba(255, 59, 48, 0.3), inset 0 1px 0 rgba(255, 59, 48, 0.4);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
 }
 
+/* Smoother Animations */
 @keyframes blink {
   0%, 49% { opacity: 1; }
   50%, 100% { opacity: 0; }
 }
 @keyframes pulse-red {
-  0%, 100% { opacity: 1; box-shadow: 0 0 24px oklch(0.65 0.28 25 / 0.8), inset 0 0 24px oklch(0.65 0.28 25 / 0.3); }
-  50% { opacity: 0.85; box-shadow: 0 0 48px oklch(0.65 0.28 25 / 1), inset 0 0 32px oklch(0.65 0.28 25 / 0.5); }
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(255, 59, 48, 0.2), inset 0 1px 0 rgba(255, 59, 48, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 50px rgba(255, 59, 48, 0.5), inset 0 1px 0 rgba(255, 59, 48, 0.5);
+  }
 }
 @keyframes ticker {
-  0% { transform: translateY(100%); opacity: 0; }
-  10%, 100% { transform: translateY(0); opacity: 1; }
-}
-@keyframes qr-shift {
-  0%, 100% { filter: hue-rotate(0deg); }
-  50% { filter: hue-rotate(30deg); }
+  0% { transform: translateY(10px); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
 }
 @keyframes scan {
   0% { transform: translateY(-100%); }
@@ -129,5 +141,5 @@
 }
 
 @utility animate-blink { animation: blink 1s steps(1) infinite; }
-@utility animate-pulse-red { animation: pulse-red 1.2s ease-in-out infinite; }
-@utility animate-scan { animation: scan 3s linear infinite; }
+@utility animate-pulse-red { animation: pulse-red 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
+@utility animate-scan { animation: scan 2.5s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
